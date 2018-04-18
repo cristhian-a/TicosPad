@@ -7,7 +7,7 @@ package br.com.senai.view;
 
 /**
  *
- * @author Aluno
+ * @author cristhian_anacleto
  */
 public class TelaSobre extends javax.swing.JDialog {
 
