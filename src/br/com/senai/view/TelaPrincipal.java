@@ -30,6 +30,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form TelaPrincipal
      */
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public TelaPrincipal() {
         //Setar o ícone
         URL url = this.getClass().getResource("/br/com/senai/img/note.png");
@@ -39,7 +40,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
 
         //Altera o botão "X"(Fechar) do programa para pedir se o usuário deseja salvar
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent evt) {
                 sair();
             }
@@ -69,7 +72,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tico's Pad");
 
         txtCampo.setColumns(20);
