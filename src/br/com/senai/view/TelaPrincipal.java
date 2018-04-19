@@ -6,9 +6,10 @@
 package br.com.senai.view;
 
 import br.com.senai.utils.ArquivoUtil;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -36,6 +37,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setIconImage(imagemTitulo);
 
         initComponents();
+
+        //Altera o botão "X"(Fechar) do programa para pedir se o usuário deseja salvar
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                sair();
+            }
+        });
     }
 
     /**
@@ -61,7 +69,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Tico's Pad");
 
         txtCampo.setColumns(20);
@@ -76,6 +84,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/senai/img/page_add.png"))); // NOI18N
         jMenuItem1.setText("Texto");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem1);
 
         jMenu1.add(jMenu3);
@@ -176,6 +189,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         sair();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        novo();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,14 +300,36 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     private void sair() {
-        int opcao = JOptionPane.showConfirmDialog(null, "Deseja salvar antes de sair?", "Sair", JOptionPane.YES_NO_CANCEL_OPTION);
+        //Verificação para saber se há algo escrito no documento
         if (txtCampo.getText().isEmpty()) {
-            dispose();
-        } else if (opcao == 0) {
+            System.exit(0);
+            return;
+        }
+
+        //Opção de salvar antes de sair
+        int opcao = JOptionPane.showConfirmDialog(null, "Deseja salvar antes de sair?", "Sair", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (opcao == 0) {
             salvar();
         } else if (opcao == 1) {
             System.exit(0);
+        } else {
+            return;
         }
     }
-    
+
+    private void novo() {
+        //Verificação para saber se há algo escrito no documento
+        if (!txtCampo.getText().isEmpty()) {
+            int opcao = JOptionPane.showConfirmDialog(null, "Deseja salvar antes de sair?", "Sair", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (opcao == 0) {
+                salvar();
+            } else if (opcao == 2) {
+                return;
+            }
+        }
+
+        txtCampo.setText("");
+        arquivoAtual = null;
+    }
+
 }
