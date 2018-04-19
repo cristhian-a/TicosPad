@@ -76,6 +76,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setTitle("Tico's Pad");
 
         txtCampo.setColumns(20);
+        txtCampo.setLineWrap(true);
         txtCampo.setRows(5);
         jScrollPane1.setViewportView(txtCampo);
 
